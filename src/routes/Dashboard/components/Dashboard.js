@@ -23,7 +23,6 @@ const utils = new Utils()
 
 const paperStyle = {
 	height: '15vh',
-	width: '22%',
 	margin: 10,
 	padding: 20,
 	textAlign: 'center',
@@ -96,9 +95,9 @@ class DashboardView extends React.Component {
 					<div>
 						{/*<h1>{utils.write({id: 'dashboard.title'})}</h1>*/}
 					</div>
-					<div style={{marginBottom:'20px'}}>
+					<div className="row col-12" style={{marginBottom:'20px'}}>
 						{this.props.data.topBoxes.map((row, index) => {
-							return <Paper className={'paper col col-12 ' + paperTypes[index] } key={index}
+							return <Paper className={'paper col col-5 ' + paperTypes[index] } key={index}
 							              style={paperStyle} zDepth={1}>
 								<div className="row" style={{fontSize: '24px', fontWeight: 'bold'}}>
 									{row.value}
