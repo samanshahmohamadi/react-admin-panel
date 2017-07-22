@@ -1,0 +1,8 @@
+/*VazirFDFont*/
+@font-face
+{
+  font-family:'VazirFD';
+     src: url('Vazir-FD.eot?#') format('eot'),  /* IE6–8 */
+     url('Vazir-FD.woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+     url('Vazir-FD.ttf') format('truetype');  /* Saf3—5, Chrome4+, FF3.5, Opera 10+ */
+}
