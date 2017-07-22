@@ -1,0 +1,17 @@
+$primary-color:#0288d1;
+$secondary-color:#29b6f6;
+
+.page-layout__viewport {
+  padding-top: 0;
+}
+
+.page-layout__nav-item--active {
+  font-weight: bold;
+  text-decoration: underline;
+}
+.color-secondary {
+  color: $secondary-color;
+}
+.color-accent {
+  color: #2abc73;
+}

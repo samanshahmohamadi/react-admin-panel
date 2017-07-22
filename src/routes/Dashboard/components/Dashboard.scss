@@ -1,0 +1,35 @@
+.paper:before {
+  content: '';
+  position: absolute;
+  display: block;
+  width: 4px;
+  left: -1px;
+  top: -1px;
+  bottom: -1px;
+}
+
+.alert:before {
+  background: #ff1744;
+}
+.success:before {
+  background: #00e676;
+}
+.info:before {
+  background: #512da8;
+}
+.warning:before {
+  background: #ffa726;
+}
+@media (min-width: 1200px) and (max-width: 1400px) {
+}
+@media (min-width: 1200px) {
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+}
+@media (min-width: 768px) and (max-width: 991px) {
+}
+@media (min-width: 576px) and (max-width: 767px) {
+}
+
+@media (max-width: 576px) {
+}
