@@ -11,7 +11,7 @@ import MenuItem from 'material-ui/MenuItem'
 
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
 import {store} from '../main'
-
+const Config = require('Config')
 const RightMenu = (props) => (
 	<IconMenu
 		{...props}
@@ -27,7 +27,7 @@ const RightMenu = (props) => (
 )
 
 const handleLogout = () => {
-	new HttpRequest().get('http://localhost:3001/logout', {})
+	new HttpRequest().get(Config.apiUrl + '/logout', {})
 		.then(() => {
 			localStorage.clear()
 			store.dispatch({

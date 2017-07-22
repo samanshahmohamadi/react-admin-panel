@@ -8,7 +8,7 @@ import {browserHistory} from 'react-router'
 import MyLoader from '../../../components/MyLoader'
 import HttpRequest from '../../../utils/HttpRequest'
 import cover from '../../../../public/cover.jpg'
-
+const Config = require('Config')
 import {store} from '../../../main';
 
 let Loader = require('react-loaders').Loader;
@@ -34,7 +34,7 @@ class LoginView extends React.Component {
 	}
 
 	handleLogin = () => {
-		new HttpRequest().post("http://localhost:3001/login", {
+		new HttpRequest().post(Config.apiUrl + "/login", {
 			username: this.state.username,
 			password: this.state.password
 		})

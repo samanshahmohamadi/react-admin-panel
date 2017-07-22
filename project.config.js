@@ -18,10 +18,10 @@ module.exports = {
 	externals: {
 		'prop-types': 'PropTypes',
 		'Config': JSON.stringify(process.env.NODE_ENV === 'production' ? {
-			apiUrl: 'https://talaikis.com/api/quotes',
+			apiUrl: 'http://5.9.248.8:3001',
 			defaultLang: 'en'
 		} : {
-			apiUrl: 'https://talaikis.com/api/quotes',
+			apiUrl: 'http://localhost:3001',
 			defaultLang: 'en'
 		})
 	},

@@ -8,6 +8,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import HttpRequest from '../utils/HttpRequest'
 import PropTypes from 'prop-types'
+const Config = require('Config')
 /**
  * Dialog with action buttons. The actions are passed in as an array of React objects,
  * in this example [FlatButtons](/#/components/flat-button).
@@ -48,8 +49,8 @@ export default class Login extends React.Component {
 	}
 
 	handleLogin = () => {
-		const { store } = this.context
-		new HttpRequest().post("http://localhost:3001/login", {
+		const {store} = this.context
+		new HttpRequest().post(Config.apiUrl + "/login", {
 			username: this.state.username,
 			password: this.state.password
 		})
@@ -75,7 +76,7 @@ export default class Login extends React.Component {
 		this.setState({password: e.target.value})
 	}
 
-	render() {
+	render () {
 		const actions = [
 			<FlatButton
 				label="Cancel"
@@ -87,7 +88,7 @@ export default class Login extends React.Component {
 				primary={true}
 				keyboardFocused={false}
 				onTouchTap={this.handleLogin}
-			/>,
+			/>
 		];
 
 		return (

@@ -72,7 +72,7 @@ class Navbar extends React.Component {
 	}
 
 	handleLogout = () => {
-		new HttpRequest().get("http://localhost:3001/logout", {
+		new HttpRequest().get(Config.apiUrl + "/logout", {
 			username: this.state.username
 		})
 			.then(payload => {

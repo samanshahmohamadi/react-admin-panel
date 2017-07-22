@@ -13,7 +13,7 @@ export function getData () {
 	return (dispatch, getState) => {
 		return new Promise((resolve) => {
 			Promise.all([
-				new HttpRequest().post('http://localhost:3001/dashboardData', {}),
+				new HttpRequest().post(Config.apiUrl + '/dashboardData', {}),
 				new HttpRequest().get('http://api.coindesk.com/v1/bpi/historical/close.json', {})
 			])
 				.then(payload => {
