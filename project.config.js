@@ -21,7 +21,7 @@ module.exports = {
 			apiUrl: 'http://5.9.248.8:3001',
 			defaultLang: 'en'
 		} : {
-			apiUrl: 'http://localhost:3001',
+			apiUrl: 'http://localhost:8080',
 			defaultLang: 'en'
 		})
 	},

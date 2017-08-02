@@ -5,9 +5,15 @@ import FactsRoute from './Facts'
 
 import LoginLayout from '../layouts/LoginLayout/LoginLayout'
 import LoginRoute from './Login'
+import SignupRoute from './SignUp'
+import ForgetPasswordRoute from './ForgetPassword'
+import RecoverPasswordRoute from './RecoverPassword'
 
 import DashboardLayout from '../layouts/DashboardLayout/DashboardLayout'
 import DashboardRoute from './Dashboard'
+import AddStoreRoute from './AddStore'
+import ListStoreRoute from './StoreList'
+import StoreDetailRoute from './StoreDetail'
 
 /*  Note: Instead of using JSX, we recommend using react-router
  PlainRoute objects to build route definitions.   */
@@ -22,12 +28,27 @@ export const createRoutes = (store) => ([{
 }, {
 	path: '/',
 	component: LoginLayout,
-	indexRoute: LoginRoute(store)
+	indexRoute: LoginRoute(store),
+	childRoutes: [
+		SignupRoute(store),
+		ForgetPasswordRoute(store),
+		RecoverPasswordRoute(store)
+	]
 }, {
 	path: '/dashboard',
 	component: DashboardLayout,
 	indexRoute: DashboardRoute(store),
-	childRoutes: []
+	childRoutes: [
+		{
+			path: '/store',
+			childRoutes: [
+				AddStoreRoute(store),
+				ListStoreRoute(store),
+				StoreDetailRoute(store)
+			]
+		}
+		// AddStoreRoute(store)
+	]
 }])
 
 /*  Note: childRoutes can be chunked or otherwise loaded programmatically

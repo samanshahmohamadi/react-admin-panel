@@ -72,7 +72,10 @@ class Navbar extends React.Component {
 	}
 
 	handleLogout = () => {
-		new HttpRequest().get(Config.apiUrl + "/logout", {
+		localStorage.clear()
+		store.dispatch(this.dispatchLogout())
+		browserHistory.push('/')
+		/*new HttpRequest().get(Config.apiUrl + "/logout", {
 			username: this.state.username
 		})
 			.then(payload => {
@@ -81,7 +84,7 @@ class Navbar extends React.Component {
 			})
 			.catch(err => {
 				alert('Logout Failed!')
-			})
+			})*/
 		//this.props.loginStateChange(true);
 	};
 

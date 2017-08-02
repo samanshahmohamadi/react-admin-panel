@@ -22,7 +22,20 @@ const isAuth = localStorage.getItem('isAuth')
 if (isAuth) {
 	store.dispatch({
 		type: 'LOGGED_IN',
-		payload: {}
+		payload: {
+			address: localStorage.getItem('address'),
+			auth: localStorage.getItem('auth'),
+			email: localStorage.getItem('email'),
+			emailValidated: localStorage.getItem('emailValidated'),
+			id: localStorage.getItem('id'),
+			isAdmin: localStorage.getItem('isAdmin'),
+			isAuth: localStorage.getItem('isAuth'),
+			phoneNo: localStorage.getItem('phoneNo'),
+			phoneNoValidated: localStorage.getItem('phoneNoValidated'),
+			stores: localStorage.getItem('stores'),
+			status: localStorage.getItem('status'),
+			username: localStorage.getItem('username'),
+		}
 	})
 }
 

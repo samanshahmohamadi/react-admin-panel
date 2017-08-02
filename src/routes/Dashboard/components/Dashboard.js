@@ -13,7 +13,8 @@ import {injectIntl} from 'react-intl';
 import {redA400, deepPurple300} from 'material-ui/styles/colors'
 import TrendUpSVG from 'material-ui/svg-icons/action/trending-up'
 import TrendDownSVG from 'material-ui/svg-icons/action/trending-down'
-
+import UserPending from './UserPending'
+import UserChecking from './UserChecking'
 
 import {LineChart, Line, CartesianGrid, Tooltip, XAxis, YAxis, Legend, ResponsiveContainer} from 'recharts'
 // import {recharts} from 'recharts'
@@ -34,7 +35,8 @@ const paperStyle = {
 const paperTypes = ['info', 'info', 'info', 'info']
 
 const mapStateToProps = (state) => ({
-	locale: state.locale
+	locale: state.locale,
+	auth: state.auth
 })
 
 class DashboardView extends React.Component {
@@ -92,10 +94,7 @@ class DashboardView extends React.Component {
 		if (!this.state.loading && this.props.data) {
 			return (
 				<div>
-					<div>
-						{/*<h1>{utils.write({id: 'dashboard.title'})}</h1>*/}
-					</div>
-					<div className="row col-12" style={{marginBottom:'20px'}}>
+					{/*<div className="row col-12" style={{marginBottom:'20px'}}>
 						{this.props.data.topBoxes.map((row, index) => {
 							return <Paper className={'paper col col-5 ' + paperTypes[index] } key={index}
 							              style={paperStyle} zDepth={1}>
@@ -141,6 +140,15 @@ class DashboardView extends React.Component {
 								</div>
 							</div>
 						</Paper>
+					</div>*/}
+					<div className="row col-12" style={{marginBottom:'20px'}}>
+						{this.props.auth.user.status === 'Pending' ? (
+							<UserPending/>
+						) : this.props.auth.user.status === 'Checking' ? (
+							<UserChecking/>
+						) : (
+							null
+						)}
 					</div>
 				</div>
 			)
@@ -152,6 +160,6 @@ class DashboardView extends React.Component {
 	static propTypes = {}
 
 }
-export default injectIntl(DashboardView)
-// export default connect(mapStateToProps)(injectIntl(DashboardView))
+// export default injectIntl(DashboardView)
+export default connect(mapStateToProps)(injectIntl(DashboardView))
 

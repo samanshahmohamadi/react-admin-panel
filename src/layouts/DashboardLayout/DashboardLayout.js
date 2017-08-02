@@ -1,4 +1,5 @@
 import React from 'react'
+import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {browserHistory, Link} from 'react-router'
 import './DashboardLayout.scss'
@@ -7,20 +8,23 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import AppBar from 'material-ui/AppBar'
 import Drawer from 'material-ui/Drawer'
-import FlatButton from 'material-ui/FlatButton'
-import MenuItem from 'material-ui/MenuItem'
+// import FlatButton from 'material-ui/FlatButton'
+// import MenuItem from 'material-ui/MenuItem'
 import Divider from 'material-ui/Divider'
 import {List, ListItem} from 'material-ui/List'
-import IconButton from 'material-ui/IconButton'
-import IconMenu from 'material-ui/IconMenu'
+import AlertContainer from 'react-alert'
+
+// import IconButton from 'material-ui/IconButton'
+// import IconMenu from 'material-ui/IconMenu'
 import HomeSVG from 'material-ui/svg-icons/action/home'
 import ReportSVG from 'material-ui/svg-icons/editor/format-list-bulleted'
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
+import StoreSVG from 'material-ui/svg-icons/places/business-center'
+// import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
 
 import RightMenu from '../../components/RightMenu'
-import Navbar from '../../components/Navbar'
-import Footer from '../../components/Footer'
-import Utils from '../../utils/Utils'
+// import Navbar from '../../components/Navbar'
+// import Footer from '../../components/Footer'
+// import Utils from '../../utils/Utils'
 import {
 	white,
 	deepPurple300,
@@ -33,14 +37,16 @@ import {
 	deepPurple700
 } from 'material-ui/styles/colors'
 import {injectIntl} from 'react-intl'
+import {actions as localeActions} from '../../store/locale'
+import {store} from '../../main'
 
 
 const muiTheme = getMuiTheme({
 	fontFamily: 'Lato,Ubuntu,sans-serif',
 	fontSize: 14,
 	palette: {
-		primary1Color: deepPurple300,
-		primary2Color: deepPurple700,
+		primary1Color: deepPurple700,
+		primary2Color: deepPurple300,
 		accent1Color: '#2abc73'
 	},
 	menuItem: {
@@ -61,9 +67,15 @@ const muiTheme = getMuiTheme({
 
 const leftDrawerItemStyle = {fontWeight: 'bold', color: deepPurple700}
 
+const mapStateToProps = (state) => ({
+	locale: state.locale,
+	alert: state.alert,
+	user: state.auth.user
+})
+
 class DashboardLayout extends React.Component {
 
-	constructor (props) {
+	constructor(props) {
 		super(props)
 		this.state = {
 			loading: false,
@@ -73,7 +85,36 @@ class DashboardLayout extends React.Component {
 		}
 	}
 
-	handleLeftDrawerBtnClick () {
+	alertOptions = {
+		offset: 14,
+		position: 'bottom right',
+		theme: 'light',
+		time: 5000,
+		transition: 'scale',
+	}
+
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.alert.show) {
+			this.msg.show(nextProps.alert.text, {
+				time: nextProps.alert.time,
+				type: nextProps.alert.type,
+				onClose: () => {
+					store.dispatch(this.dispatchCloseAlert())
+				}
+			})
+		}
+	}
+
+	dispatchCloseAlert = () => {
+		return dispatch => {
+			dispatch({
+				type: 'CLOSE_ALERT',
+				payload: 0
+			})
+		}
+	}
+
+	handleLeftDrawerBtnClick() {
 		this.setState({leftDrawerOpen: !this.state.leftDrawerOpen})
 		if (!this.state.leftDrawerOpen) {
 			this.setState({
@@ -85,10 +126,11 @@ class DashboardLayout extends React.Component {
 		}
 	}
 
-	componentDidMount () {
+	componentDidMount() {
 	}
 
-	render () {
+	render() {
+		console.log(this.props.user.isAdmin)
 		return <MuiThemeProvider muiTheme={muiTheme}>
 			<div style={{backgroundColor: blueGrey50, minHeight: '100vh', paddingBottom: '10%'}}
 			     dir={this.props.intl.formatMessage({id: 'layout.direction'})}>
@@ -100,19 +142,39 @@ class DashboardLayout extends React.Component {
 					title={this.props.intl.formatMessage({id: 'appBar.title'})}
 					onLeftIconButtonTouchTap={this.handleLeftDrawerBtnClick.bind(this)}
 				/>
-				<Drawer containerStyle={{zIndex: 1}} open={this.state.leftDrawerOpen}>
-					<div style={{height: muiTheme.appBar.height}}/>
-					<List>
-						<Link to="/dashboard">
-							<ListItem style={leftDrawerItemStyle} primaryText="Home"
-							          leftIcon={<HomeSVG style={{fill: deepPurple700}}/>}/>
-						</Link>
-						<Divider />
-						<ListItem style={leftDrawerItemStyle} primaryText="Reports"
-						          leftIcon={<ReportSVG style={{fill: deepPurple700}}/>}/>
-						<Divider />
-					</List>
-				</Drawer>
+				{this.props.user && this.props.user.isAdmin !== undefined ?
+					<Drawer containerStyle={{zIndex: 1}} open={this.state.leftDrawerOpen}>
+						<div style={{height: muiTheme.appBar.height}}/>
+						<List>
+							<Link to="/dashboard">
+								<ListItem style={leftDrawerItemStyle} primaryText="Home"
+								          leftIcon={<HomeSVG style={{fill: deepPurple700}}/>}/>
+							</Link>
+							<Divider />
+							<ListItem style={leftDrawerItemStyle} primaryText="Reports"
+							          leftIcon={<ReportSVG style={{fill: deepPurple700}}/>}/>
+							<Divider/>
+							{!JSON.parse(this.props.user.isAdmin) ? (
+								<Link to="/store/add">
+									<ListItem style={leftDrawerItemStyle} primaryText="Add Store"
+									          leftIcon={<StoreSVG style={{fill: deepPurple700}}/>}/>
+									<Divider />
+								</Link>
+							) : (
+								null
+							)}
+							{JSON.parse(this.props.user.isAdmin) ? (
+								<Link to="/store/list">
+									<ListItem style={leftDrawerItemStyle} primaryText="List Stores"
+									          leftIcon={<StoreSVG style={{fill: deepPurple700}}/>}/>
+									<Divider />
+								</Link>
+							) : (
+								null
+							)}
+						</List>
+					</Drawer> : null
+				}
 				<div className='container' style={{
 					paddingTop: muiTheme.appBar.height,
 					height: 'calc(100vh' - muiTheme.appBar.height + 'px)',
@@ -120,6 +182,9 @@ class DashboardLayout extends React.Component {
 					paddingRight: '40px',
 					width: this.state.containerWidth
 				}}>
+					<div>
+						<AlertContainer ref={a => this.msg = a} {...this.alertOptions} />
+					</div>
 					<div className='page-layout__viewport'>
 						{this.props.children}
 					</div>
@@ -132,5 +197,4 @@ class DashboardLayout extends React.Component {
 DashboardLayout.propTypes = {
 	children: PropTypes.node
 }
-
-export default injectIntl(DashboardLayout)
+export default connect(mapStateToProps, Object.assign({}, localeActions))(injectIntl(DashboardLayout))

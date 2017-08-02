@@ -1,16 +1,10 @@
 @import 'base';
 @import './fonts/vazir-fd/vazir-fd.css';
 @import './fonts/iransansweb/iransansweb.css';
-//@import '~bootstrap/scss/bootstrap';
 @import '~bootstrap/scss/bootstrap-grid.scss';
-//@import "~bootstrap/scss/mixins/_visibility.scss";
-//@import "~bootstrap/scss/utilities/_visibility.scss";
 @import "./visibility.scss";
 @import "./pagination.scss";
-//@import "~flexboxgrid/dist/flexboxgrid.min.css";
 @import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
-// Some best-practice CSS that's useful for most apps
-// Just remove them if they're not what you want
 @import url('https://fonts.googleapis.com/css?family=Lato:400,700');
 
 $primary-color: #512da8;
@@ -84,11 +78,12 @@ th {
 .margin-t-15pc {
   margin-top: 15%;
 }
-
-.color-green {
+.color-primary {
   color: $primary-color!important;
 }
-
+.color-secondary {
+  color: $secondary-color;
+}
 .footer {
   background: #eff3ef;
   height: 30%;
@@ -182,6 +177,7 @@ a {
 .current-lang {
   -webkit-text-fill-color: #0077ed!important;
 }
+
 // >>>>>>>>>>>>>> RESPONSIVE STYLES >>>>>>>>>>>>>>>>>>>> //
 
 @media (min-width: 1200px) {

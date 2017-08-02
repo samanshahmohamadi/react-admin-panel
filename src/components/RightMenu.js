@@ -27,18 +27,24 @@ const RightMenu = (props) => (
 )
 
 const handleLogout = () => {
-	new HttpRequest().get(Config.apiUrl + '/logout', {})
+	localStorage.clear()
+	store.dispatch({
+		type: 'LOGGED_OUT',
+		payload: {}
+	})
+	browserHistory.push('/')
+	/*new HttpRequest().get(Config.apiUrl + '/logout', {})
 		.then(() => {
 			localStorage.clear()
 			store.dispatch({
 				type: 'LOGGED_OUT',
 				payload: {}
 			})
-			browserHistory.push('/')
+			// browserHistory.push('/')
 		})
 		.catch(err => {
 			return new Error(err)
-		})
+		})*/
 }
 
 RightMenu.muiName = 'IconMenu'

@@ -13,13 +13,18 @@ export function getData () {
 	return (dispatch, getState) => {
 		return new Promise((resolve) => {
 			Promise.all([
-				new HttpRequest().post(Config.apiUrl + '/dashboardData', {}),
+				// new HttpRequest().post(Config.apiUrl + '/dashboardData', {}),
 				new HttpRequest().get('http://api.coindesk.com/v1/bpi/historical/close.json', {})
 			])
 				.then(payload => {
 					let data = {}
-					data.topBoxes = payload[0].data.topBoxes
-					data.btcPrice = payload[1].data.bpi
+					data.topBoxes = [
+						{value: '$ 32,312', text: 'Revenue'},
+						{value: '321,211', text: 'Visits'},
+						{value: '43.2 %', text: 'Bounce rate'},
+						{value: '82 s', text: 'Avg time'}
+					]
+					data.btcPrice = payload[0].data.bpi
 					dispatch({
 						type: GET_DATA,
 						payload: data
